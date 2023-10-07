@@ -21,24 +21,32 @@ def build_feature_buckets(df):
         row_index = df.index[df[field + '_rank'] == cnt][0]
     return sepsis_features_bucket
 
+def build_sample(records,sepsis_features_bucket):
+    
+    stay_id_2_feas = {}
 
-def main(argv):
-    df = pd.read_csv('../sepsis2.csv')
-    sepsis_features_bucket = build_feature_buckets(df)
-
-    base_columns = ['stay_id','hr','sofa_24hours','label']
+    base_columns = ['sofa_24hours','label']
     sepsis_columns = base_columns + num_features + cate_features
     sepsis_records = []
 
-    for _,row in df.iterrows():
+    for _,row in records.iterrows():
         new_row = []
+        
+        stay_id = int(row['stay_id'])
+        hr = int(row['hr'])
+
+        if stay_id not in stay_id_2_feas:
+            stay_id_2_feas[stay_id] = {}
+
+        stay_id_2_feas[stay_id][hr] = {}
+
         for col in base_columns:
-            new_row.append(int(row[col]))
+            stay_id_2_feas[stay_id][hr][col] = int(row[col])
 
         for k,bucket_list in sepsis_features_bucket.items():
             curr_value = row[k]
             if np.isnan(curr_value):
-                new_row.append(-1)
+                stay_id_2_feas[stay_id][hr][k] = -1
             else:
                 bk_idx = 0
                 #curr_value_float = float(curr_value)
@@ -46,17 +54,31 @@ def main(argv):
                     if curr_value < bk:
                         break
                     bk_idx += 1
-                new_row.append(bk_idx)
+                stay_id_2_feas[stay_id][hr][k] = bk_idx
 
         for fea in cate_features:
-            new_row.append(row[fea])
+            curr_value = row[fea]
+            if np.isnan(curr_value):
+                stay_id_2_feas[stay_id][hr][fea] = -1
+                new_row.append(-1)
+            else:
+                stay_id_2_feas[stay_id][hr][fea] = int(curr_value)
 
         sepsis_records.append(new_row.copy())
         
     
-    pd_output = pd.DataFrame(sepsis_records, columns=sepsis_columns)
-    pd_output.to_csv('sepsis_norm.csv')
-                
+
+
+
+def main(argv):
+    df = pd.read_csv('../sepsis2.csv')
+    sepsis_features_bucket = build_feature_buckets(df)
+
+    build_sample(df,sepsis_features_bucket)
+    
+    #pd_output = pd.DataFrame(sepsis_records, columns=sepsis_columns)
+    #pd_output.to_csv('sepsis_norm.csv')
+
     
 if __name__ == '__main__':
     main(sys.argv)
