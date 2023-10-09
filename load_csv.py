@@ -1,6 +1,15 @@
 import pandas as pd
 import numpy as np
 import sys
+
+negative_sample_limit = 10
+negative_sample_limit = 10
+sample_leap_count = 24
+
+sample_seq_min_limit = 24
+seq_length_hold = 24 * 5 + 50
+seq_length = 24 * 5
+
 cate_features = ["gcs_min","respiration","coagulation","liver","cardiovascular","cns","renal","respiration_24hours","coagulation_24hours","liver_24hours","cardiovascular_24hours","cns_24hours","renal_24hours"]
 num_features = ["pao2fio2ratio_novent","pao2fio2ratio_vent","rate_epinephrine","rate_norepinephrine","rate_dopamine","rate_dobutamine","meanbp_min","uo_24hr","bilirubin_max","creatinine_max","platelet_min"]
 
@@ -25,7 +34,7 @@ def build_sample(records,sepsis_features_bucket):
     
     stay_id_2_feas = {}
 
-    base_columns = ['sofa_24hours','label']
+    base_columns = ['sofa_24hours','label','hr']
     sepsis_columns = base_columns + num_features + cate_features
     sepsis_records = []
 
@@ -60,11 +69,37 @@ def build_sample(records,sepsis_features_bucket):
             curr_value = row[fea]
             if np.isnan(curr_value):
                 stay_id_2_feas[stay_id][hr][fea] = -1
-                new_row.append(-1)
             else:
                 stay_id_2_feas[stay_id][hr][fea] = int(curr_value)
 
-        sepsis_records.append(new_row.copy())
+
+    for stay_id,records in stay_id_2_feas:
+        sorted_records = sorted(records.items(), key=lambda x: x[0])
+ 
+        seq_cnt = 0
+
+        sample_dict = {}
+        for field in sepsis_columns:
+            sample_dict[field] = [-1 for i in range(seq_length_hold)]
+
+        label = 0
+        label_hr = 0
+
+        for hr,feas in sorted_records:
+            if seq_cnt > sample_seq_min_limit:
+                pass
+            
+            label = feas['label'] 
+            label_hr = hr
+
+            if label > 0:
+                break
+            for field in sepsis_columns:
+                sample_dict[field].append(feas[field])
+                del sample_dict[field][0:1]
+
+            seq_cnt += 1
+        
         
     
 
