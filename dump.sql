@@ -1,4 +1,0 @@
-\copy (select t1.stay_id,hr,pao2fio2ratio_novent,pao2fio2ratio_vent,rate_epinephrine,rate_norepinephrine,rate_dopamine,rate_dobutamine,meanbp_min,gcs_min,uo_24hr,bilirubin_max,creatinine_max,platelet_min,t1.respiration,t1.coagulation,t1.liver,t1.cardiovascular,t1.cns,t1.renal,t1.respiration_24hours,coagulation_24hours,liver_24hours,cardiovascular_24hours,cns_24hours,renal_24hours,sofa_24hours,case when t2.stay_id is not null then 1 else 0 end  as label from sofa t1 left outer join sepsis3 t2 on t1.stay_id=t2.stay_id and t1.endtime=t2.sofa_time ) to '~/Downloads/sepsis.csv' with csv header ;
-
-
-stay_id,hr,pao2fio2ratio_novent,pao2fio2ratio_vent,rate_epinephrine,rate_norepinephrine,rate_dopamine,rate_dobutamine,meanbp_min,gcs_min,uo_24hr,bilirubin_max,creatinine_max,platelet_min,respiration,coagulation,liver,cardiovascular,cns,renal,respiration_24hours,coagulation_24hours,liver_24hours,cardiovascular_24hours,cns_24hours,renal_24hours,sofa_24hours,label
