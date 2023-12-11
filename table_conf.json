@@ -1,0 +1,8 @@
+{
+    "bg" : ["lactate","ph","baseexcess"],
+    "blood_differential" : ["basophils","eosinophils","lymphocytes","monocytes","neutrophils"],
+    "chemistry" : ["aniongap","bicarbonate","bun","calcium","chloride","sodium","potassium"],
+    "coagulation" : ["inr","pt","ptt"],
+    "complete_blood_count" : ["wbc","rdw","platelet","hematocrit","hemoglobin","mchc"],
+    "inflammation" : ["crp"]
+}
