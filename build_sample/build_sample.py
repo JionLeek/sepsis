@@ -17,7 +17,6 @@ g_seq_init_length = 24 * 3 #seq特征前置输出,用户补充seq长度不足问
 g_seq_length = g_seq_min_length + g_seq_init_length
 g_seq_idx = [i for i in range(0,28,3)] + [(i*12 - 1)  for i in range(3,g_seq_length//12 + 1)] 
 
-g_label_hrs_length = 48
 g_label_hrs = [24,48]
 g_label_hrs_length = g_label_hrs[-1]
 g_base_columns = ['label','hr','stay_id','charttime']
