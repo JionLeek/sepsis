@@ -13,7 +13,7 @@ def set_args():
     parser.add_argument('--train_batch_size', type=int, default=512, help="train batch size")
     parser.add_argument('--eval_batch_size', type=int, default=512, help="eval batch size")
 
-    parser.add_argument('--learning_rate', type=float, default=0.002, help="learning rate")
+    parser.add_argument('--learning_rate', type=float, default=0.001, help="learning rate")
     parser.add_argument('--weight_decay', type=float, default=0.0001, help="weight_decay")
 
     args = parser.parse_args()

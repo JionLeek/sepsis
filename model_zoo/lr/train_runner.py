@@ -25,8 +25,7 @@ from collections import OrderedDict
 from inputs import get_eval_sample,get_train_sample
 
 def evaluate_model(model,valid_loader):
-    # 指定多gpu运行
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    device = torch.device("mps" if torch.backends.mps.is_available() else("cuda" if torch.cuda.is_available() else "cpu"))
     model.to(device)
     model.eval()
     with torch.no_grad():
@@ -43,11 +42,8 @@ def evaluate_model(model,valid_loader):
 
 def train_model(model,train_loader):
 
-    # 指定多gpu运行
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    device = torch.device("mps" if torch.backends.mps.is_available() else("cuda" if torch.cuda.is_available() else "cpu"))
     model.to(device)
-    if torch.cuda.is_available():
-        model.cuda()
 
     loss_fct = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
