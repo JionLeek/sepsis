@@ -8,7 +8,7 @@
     "base_feature":{
         "gender":100,
         "age":100,
-        "seq_length":100
+        "seq_length": 150
     },
     "seq_len":18,
     "seq_feature":{
