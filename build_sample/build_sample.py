@@ -19,6 +19,7 @@ g_seq_idx = [i for i in range(0,28,3)] + [(i*12 - 1)  for i in range(3,g_seq_len
 
 g_label_hrs_length = 48
 g_label_hrs = [24,48]
+g_label_hrs_length = g_label_hrs[-1]
 g_base_columns = ['label','hr','stay_id','charttime']
 g_build_sample_step_num = 12
 #构建特征离散化编码
