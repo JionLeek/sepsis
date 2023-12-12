@@ -14,7 +14,7 @@ def get_train_sample(args):
     print("load train sample. currtime:{}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),flush=True)
     filename = Path(args.train_file_path)
     input_data = pd.read_csv(filename,engine='c')
-
+    input_data = input_data[((input_data['hr'])==args.label_hr)]
     return input_data
 
 
@@ -22,5 +22,5 @@ def get_eval_sample(args):
     print("load eval sample start. currtime:{}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),flush=True)
     filename = Path(args.eval_file_path)
     input_data = pd.read_csv(filename,engine='c')
-
+    input_data = input_data[((input_data['hr'])==args.label_hr)]
     return input_data

@@ -106,7 +106,7 @@ if __name__ == '__main__':
                                   torch.FloatTensor(train_data['label'].values),)
     train_loader = DataLoader(dataset=train_dataset, batch_size=args.train_batch_size, shuffle=True)
 
-    model = DeepSepsis(feature_conf,num_hidden_units=[512,256])
+    model = DeepSepsis(feature_conf,num_hidden_units=[512,256],n_layers=2)
 
     print("training. currtime:{}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),flush=True)
     train_model(model,train_loader)

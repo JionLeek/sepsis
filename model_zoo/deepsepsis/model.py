@@ -4,7 +4,7 @@ import numpy as np
 from collections import OrderedDict
 
 class Interact_Layer(nn.Module):
-    def __init__(self, embed_dim=16, n_heads=2, d=8):
+    def __init__(self, embed_dim=16, n_heads=2, d=4):
         # attention 技术的自适应特征交叉
         super(Interact_Layer, self).__init__()
         self.embed_dim = embed_dim
@@ -16,7 +16,8 @@ class Interact_Layer(nn.Module):
         self.fc = nn.Linear(self.n_heads * self.d, self.embed_dim, bias=False)
         self.activate = nn.ReLU()
         for weight in self.parameters():
-            nn.init.xavier_uniform_(weight)
+            #nn.init.xavier_uniform_(weight)
+            nn.init.constant_(weight,0.0001)
 
     def forward(self, input_q, input_k, input_v):
         residual, batch_size = input_q, input_q.size(0)
