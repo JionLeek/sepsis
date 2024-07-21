@@ -4,5 +4,6 @@
     "chemistry" : ["aniongap","bicarbonate","bun","calcium","chloride","sodium","potassium"],
     "coagulation" : ["inr","pt","ptt"],
     "complete_blood_count" : ["wbc","rdw","platelet","hematocrit","hemoglobin","mchc"],
-    "inflammation" : ["crp"]
+    "inflammation" : ["crp"],
+    "vitalsign":["heart_rate","resp_rate","temperature"]
 }
