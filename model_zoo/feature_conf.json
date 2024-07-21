@@ -12,6 +12,9 @@
     },
     "seq_len":18,
     "seq_feature":{
+        "heart_rate":100,
+        "resp_rate":100,
+        "temperature":100,
         "pao2fio2ratio_novent":100,
         "pao2fio2ratio_vent":100,
         "rate_epinephrine":100,
